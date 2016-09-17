@@ -15,6 +15,7 @@ namespace SDKSamples.ImageSample
         private static RootObject _root;
 
         public static RootObject Root { get { return _root ?? Upload(); } }
+
         public static RootObject Upload(string workingDir = null)
         {
             workingDir = workingDir ?? Environment.CurrentDirectory;

@@ -170,7 +170,7 @@
           SelectionMode="Extended" 
           ItemsSource="{Binding}" 
           SelectedIndex="0" 
-          MouseDoubleClick="OnPhotoClick">
+          MouseDoubleClick="OnPhotoClick" >
                     <ListBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Edit" Click="editPhoto"/>

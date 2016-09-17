@@ -14,10 +14,12 @@ namespace SDKSamples.ImageSample
     public sealed partial class MainWindow : Window
     {
         public PhotoCollection Photos;
+        private string _path;
 
-        public MainWindow()
+        public MainWindow(string path)
         {
             InitializeComponent();
+            _path = path;
         }
 
         private void OnPhotoClick(object sender, RoutedEventArgs e)
@@ -79,7 +81,9 @@ namespace SDKSamples.ImageSample
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             var photo = JsonData.Root.Groups.First(g => g.Id == "1");
-            ImagesDir.Text = Environment.CurrentDirectory+Path.GetDirectoryName(photo.Items[0].urlSmall);
+            //Photos = (PhotoCollection)(this.Resources["Photos"] as ObjectDataProvider).Data;
+            //Photos.Path = Environment.CurrentDirectory + "\\images";
+            //ImagesDir.Text = Environment.CurrentDirectory+Path.GetDirectoryName(photo.Items[0].urlSmall);
 
         }
     }

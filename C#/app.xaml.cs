@@ -10,7 +10,9 @@ namespace SDKSamples.ImageSample
     {
         void OnApplicationStartup(object sender, StartupEventArgs args)
         {
-            MainWindow mainWindow = new MainWindow();
+            //InitWindow window = new InitWindow();
+            //window.Show();
+            MainWindow mainWindow = new MainWindow(null);
             mainWindow.Show();
             mainWindow.Photos = (PhotoCollection)(this.Resources["Photos"] as ObjectDataProvider).Data;
             mainWindow.Photos.Path = Environment.CurrentDirectory + "\\images";
