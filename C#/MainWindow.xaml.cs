@@ -38,7 +38,7 @@ namespace SDKSamples.ImageSample
 
         private void OnImagesDirChangeClick(object sender, RoutedEventArgs e)
         {
-            this.Photos.Path = ImagesDir.Text;
+            this.Photos.DirectoryPath = ImagesDir.Text;
         }
 
         private void OnUpClick(object sender, RoutedEventArgs e)
@@ -65,25 +65,32 @@ namespace SDKSamples.ImageSample
 
         private void OnDeleteClick(object sender, RoutedEventArgs e)
         {
-            this.Photos.Path = ImagesDir.Text;
+            var photo = (Photo)PhotosListBox.SelectedItem;
+            if (photo != null)
+            {
+                var current = JsonData.Root.GetPhoto().Delete(Path.GetFileName(photo.Source));
+                Photos.Update();
+                this.PhotosListBox.SelectedIndex = current;
+            }
         }
 
         private void OnAddClick(object sender, RoutedEventArgs e)
         {
-            this.Photos.Path = ImagesDir.Text;
+            this.Photos.DirectoryPath = ImagesDir.Text;
         }
 
         private void OnSaveClick(object sender, RoutedEventArgs e)
         {
-            this.Photos.Path = ImagesDir.Text;
+            this.Photos.DirectoryPath = ImagesDir.Text;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             var photo = JsonData.Root.Groups.First(g => g.Id == "1");
-            //Photos = (PhotoCollection)(this.Resources["Photos"] as ObjectDataProvider).Data;
-            //Photos.Path = Environment.CurrentDirectory + "\\images";
-            //ImagesDir.Text = Environment.CurrentDirectory+Path.GetDirectoryName(photo.Items[0].urlSmall);
+            Photos = (PhotoCollection)(app.Current.Resources["Photos"] as ObjectDataProvider).Data;
+            Photos.DirectoryPath = Environment.CurrentDirectory + "\\images";
+            if (photo.Items.Count > 0)
+                ImagesDir.Text = Environment.CurrentDirectory+Path.GetDirectoryName(photo.Items[0].urlSmall);
 
         }
     }

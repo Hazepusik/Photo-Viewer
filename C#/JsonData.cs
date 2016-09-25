@@ -78,6 +78,17 @@ namespace SDKSamples.ImageSample
             return Math.Min(Items.Count - 1, toDown + 1);
         }
 
+        internal int Delete(string filename)
+        {
+            var toRm = Items.IndexOf(Items.First(i => Path.GetFileName(i.urlLarge) == filename));
+            for (var i = toRm + 1; i < Items.Count - 2; ++i)
+            {
+                Items[i].id = Items[i + 1].id;
+            }
+            Items.RemoveAt(toRm);
+            return Math.Min(Items.Count - 1, toRm);
+        }
+
         public static Group NewPhoto()
         {
             return new Group

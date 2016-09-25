@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -53,7 +54,7 @@ namespace SDKSamples.ImageSample
             Update();
         }
 
-        public string Path
+        public string DirectoryPath
         {
             set
             {
@@ -77,15 +78,24 @@ namespace SDKSamples.ImageSample
             this.Clear();
             try
             {
+                var toSave = new List<string>();
                 var files = _directory.GetFiles("*.jpg");
-                foreach (var item in JsonData.Root.GetPhoto().Items.OrderBy(i => i.id))
+                foreach (var item in JsonData.Root.GetPhoto().Items.OrderBy(i => i.id).ToArray())
                 {
-                    var file = files.FirstOrDefault(f => System.IO.Path.GetFileName(item.urlLarge) == f.Name);
+                    var file = files.FirstOrDefault(f => Path.GetFileName(item.urlLarge) == f.Name);
                     if (file != null)
                     {
                         Add(new Photo(file.FullName));
+                        toSave.Add(file.FullName);
                     }
                 }
+                foreach (var name in files.Where(f => !toSave.Contains(f.FullName)).Select(f => f.FullName))
+                {
+                    //File.Delete(name);
+                }
+                files = _directory.GetFiles("*.jpg");
+                JsonData.Root.GetPhoto().Items = JsonData.Root.GetPhoto().Items.Where(item => toSave.Select(f => Path.GetFileName(f)).Contains(Path.GetFileName(item.urlLarge))).ToList();
+
 
             }
             catch (DirectoryNotFoundException)
