@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-//using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SDKSamples.ImageSample
+namespace SolImageGallery2_WPF
 {
     /// <summary>
     /// Логика взаимодействия для InitWindow.xaml
@@ -29,6 +27,7 @@ namespace SDKSamples.ImageSample
 
         private void OnImagesDirChangeClick(object sender, RoutedEventArgs e)
         {
+
             System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
 
             System.Windows.Forms.DialogResult result = fbd.ShowDialog();
@@ -37,14 +36,24 @@ namespace SDKSamples.ImageSample
             else
                 MessageBox.Show("Unknown dir: " + fbd.SelectedPath);
         }
-
+        
+        private void OnPresentationClick(object sender, RoutedEventArgs e)
+        {
+            if (!Directory.Exists(ImagesDir.Text))
+                MessageBox.Show("Unknown dir: " + ImagesDir.Text);
+            else
+            {
+                MainWindow mainWindow = new MainWindow(ImagesDir.Text, "pres2");
+                mainWindow.Show();
+            }
+        }
         private void OnPhotoClick(object sender, RoutedEventArgs e)
         {
             if (!Directory.Exists(ImagesDir.Text))
                 MessageBox.Show("Unknown dir: " + ImagesDir.Text);
             else
             {
-                MainWindow mainWindow = new MainWindow(ImagesDir.Text);
+                MainWindow mainWindow = new MainWindow(ImagesDir.Text, "images");
                 mainWindow.Show();
             }
         }
